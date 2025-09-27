@@ -14,13 +14,13 @@ WHITE = (255, 255, 255)
 RED = (200, 0, 0)
 
 # Načtení obrázků
-player_img = pygame.image.load("hrac.png")
+player_img = pygame.image.load("tatka.png")
 player_img = pygame.transform.scale(player_img, (50, 50))
 
 items_images = {
-    "Meč": pygame.transform.scale(pygame.image.load("mec.png"), (30, 30)),
-    "Lektvar": pygame.transform.scale(pygame.image.load("lektvar.png"), (30, 30)),
-    "Klíč": pygame.transform.scale(pygame.image.load("klic.png"), (30, 30)),
+    "Klimatex": pygame.transform.scale(pygame.image.load("klimatex.png"), (30, 30)),
+    "Dates": pygame.transform.scale(pygame.image.load("dates.png"), (30, 30)),
+    "French": pygame.transform.scale(pygame.image.load("french.png"), (30, 30)),
 }
 
 # Hráč
