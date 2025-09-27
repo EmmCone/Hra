@@ -1,0 +1,86 @@
+import pygame
+import random
+
+# Inicializace pygame
+pygame.init()
+
+# Velikost okna
+WIDTH, HEIGHT = 800, 600
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Hra s vice predmety")
+
+# Barvy
+WHITE = (255, 255, 255)
+RED = (200, 0, 0)
+
+# Načtení obrázků
+player_img = pygame.image.load("hrac.png")
+player_img = pygame.transform.scale(player_img, (50, 50))
+
+items_images = {
+    "Meč": pygame.transform.scale(pygame.image.load("mec.png"), (30, 30)),
+    "Lektvar": pygame.transform.scale(pygame.image.load("lektvar.png"), (30, 30)),
+    "Klíč": pygame.transform.scale(pygame.image.load("klic.png"), (30, 30)),
+}
+
+# Hráč
+player_rect = player_img.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+player_speed = 5
+
+# Předměty (náhodné rozmístění)
+item_types = list(items_images.keys())
+items = []
+for _ in range(8):  # počet předmětů
+    name = random.choice(item_types)
+    img = items_images[name]
+    rect = img.get_rect(topleft=(random.randint(50, WIDTH-50), random.randint(50, HEIGHT-50)))
+    items.append({"name": name, "rect": rect})
+
+# Inventář
+inventory = []
+font = pygame.font.SysFont(None, 28)
+
+# Hlavní smyčka hry
+running = True
+while running:
+    window.fill(WHITE)
+
+    # Ovládání hráče
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player_rect.x -= player_speed
+    if keys[pygame.K_RIGHT]:
+        player_rect.x += player_speed
+    if keys[pygame.K_UP]:
+        player_rect.y -= player_speed
+    if keys[pygame.K_DOWN]:
+        player_rect.y += player_speed
+
+    # Omezíme pohyb hráče na okno
+    player_rect.x = max(0, min(WIDTH - player_rect.width, player_rect.x))
+    player_rect.y = max(0, min(HEIGHT - player_rect.height, player_rect.y))
+
+    # Vykreslení hráče
+    window.blit(player_img, player_rect)
+
+    # Předměty + kolize
+    for item in items[:]:
+        window.blit(items_images[item["name"]], item["rect"])
+        if player_rect.colliderect(item["rect"]):
+            items.remove(item)
+            inventory.append(item["name"])
+
+    # Inventář
+    inv_text = "Inventář: " + ", ".join(inventory)
+    text_surface = font.render(inv_text, True, RED)
+    window.blit(text_surface, (10, 10))
+
+    # Události
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    pygame.display.flip()
+    pygame.time.Clock().tick(60)
+
+pygame.quit()
