@@ -33,8 +33,8 @@ for (let key in itemImgs) {
 const player = {
   x: WIDTH / 2 - 25,
   y: HEIGHT / 2 - 25,
-  width: 50,
-  height: 50,
+  width: 300,
+  height: 300,
   speed: 5
 };
 
@@ -50,8 +50,8 @@ for (let i = 0; i < 8; i++) {
     name: name,
     x: Math.random() * (WIDTH - 30 - 50) + 50,
     y: Math.random() * (HEIGHT - 30 - 50) + 50,
-    width: 30,
-    height: 30
+    width: 100,
+    height: 100
   };
   items.push(rect);
 }
