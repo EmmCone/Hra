@@ -13,15 +13,15 @@ const MAP_HEIGHT = 2000;
 // Načtení obrázků
 // =============================
 const playerImg = new Image();
-playerImg.src = "obrazky/tatka.png";       // hráč
+playerImg.src = "tatka.png";       // hráč
 
 const backgroundImg = new Image();
-backgroundImg.src = "obrazky/mapa.png";    // sem si můžeš nakreslit celou mapu
+backgroundImg.src = "mapa.png";    // sem si můžeš nakreslit celou mapu
 
 const itemImgs = {
-  Klimatex: "obrazky/klimatex.png",
-  Dates: "obrazky/dates.png",
-  French: "obrazky/french.png"
+  Klimatex: "klimatex.png",
+  Dates: "dates.png",
+  French: "french.png"
 };
 
 const itemsImages = {};
