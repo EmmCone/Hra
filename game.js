@@ -30,6 +30,18 @@ for (let key in itemImgs) {
   img.src = itemImgs[key];
   itemsImages[key] = img;
 }
+// =============================
+// Obrázky překážek
+// =============================
+const obstacleImgs = {
+  cafe: new Image(),
+  albert: new Image()
+  house: new Image()
+};
+
+obstacleImgs.strom.src = "cafe.png";
+obstacleImgs.kamen.src = "albert.png";
+obstacleImgs.kamen.src = "house.png";
 
 // =============================
 // Hráč
@@ -68,10 +80,10 @@ for (let i = 0; i < 10; i++) {
 // Překážky
 // =============================
 const obstacles = [
-  { x: 400, y: 400, width: 150, height: 150, color: "green" }, // např. strom
-  { x: 1000, y: 800, width: 200, height: 100, color: "brown" } // např. kámen
+  { x: 400, y: 400, width: 256, height: 256, type: "cafe" },
+  { x: 1000, y: 800, width: 256, height: 256, type: "albetrt" },
+  { x: 1400, y: 500, width: 256, height: 256, type: "house" }
 ];
-
 // =============================
 // Inventář
 // =============================
@@ -141,16 +153,17 @@ function gameLoop() {
     ctx.fillRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT - INVENTORY_HEIGHT);
   }
 
-  // Předměty
-  for (let i = items.length - 1; i >= 0; i--) {
-    const it = items[i];
-    ctx.drawImage(itemsImages[it.name], it.x - camera.x, it.y - camera.y, it.width, it.height);
-    if (isColliding(player, it)) {
-      inventory.push(it.name);
-      items.splice(i, 1);
-    }
+  // Překážky
+for (let obs of obstacles) {
+  const img = obstacleImgs[obs.type];
+  if (img.complete) {
+    ctx.drawImage(img, obs.x - camera.x, obs.y - camera.y, obs.width, obs.height);
+  } else {
+    // Nouzové barevné zobrazení, kdyby se obrázek ještě nenačetl
+    ctx.fillStyle = "gray";
+    ctx.fillRect(obs.x - camera.x, obs.y - camera.y, obs.width, obs.height);
   }
-
+}
   // Překážky
   for (let obs of obstacles) {
     ctx.fillStyle = obs.color;
